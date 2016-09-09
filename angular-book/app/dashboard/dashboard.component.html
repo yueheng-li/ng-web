@@ -1,0 +1,8 @@
+<h3>Top Bookes</h3>
+<div class="grid grid-pad">
+  <div *ngFor="let book of bookes" (click)="gotoDetail(book)" class="col-1-4">
+    <div class="module hero">
+      <h4>{{book.name}}</h4>
+    </div>
+  </div>
+</div>
