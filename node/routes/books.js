@@ -1,23 +1,33 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId; 
 
+var Books = require('../models/books.js');
 
-
-/* GET home page. */
+/* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+	// 跨域访问设定
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Credentials', true);
+	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    Books.find({},{},function (err, docs) {
+      res.json(docs);
+    });
 });
 
+/*
+ * Get book list.
+ */
 router.get('/booklist', function(req, res) {
 	// 跨域访问设定
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-	var db = req.db;
-	var collection = db.get('bookcollection');
-	collection.find({}, {}, function(e, docs){
-		res.json(docs);
-	});
+    Books.find({},{},function (err, docs) {
+      res.json(docs);
+    });
 });
 
 /*
@@ -29,23 +39,8 @@ router.get('/book/:id', function(req, res) {
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 	var id = req.params.id;
-	var db = req.db;
-	var collection = db.get('bookcollection');
-	collection.find({"_id":id}, {}, function(e, docs){
-		res.json(docs);
-	});
-});
-
-/*
- * POST to adduser.
- */
-router.post('/addbook', function(req, res) {
-    var db = req.db;
-    var collection = db.get('bookcollection');
-    collection.insert(req.body, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
+	Books.find({"_id":id},{},function (err, docs) {
+      res.json(docs);
     });
 });
 

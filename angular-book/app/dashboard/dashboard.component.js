@@ -10,22 +10,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var mock_bookes_1 = require('../bookes/mock.bookes');
-var book_serevice_1 = require('../bookes/book.serevice');
+var book_serevice_1 = require('../bookes/service/book.serevice');
 var DashboardComponent = (function () {
     function DashboardComponent(router, bookService) {
         this.router = router;
         this.bookService = bookService;
-        this.bookes = [];
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.bookes = mock_bookes_1.Bookes;
-        this.bookService.getBookes()
-            .then(function (bookes) { return _this.bookes = bookes; });
+        //this.bookes = Bookes;
+        //this.bookService.getBookes()
+        //  .then(bookes => this.bookes = bookes);
+        this.bookService.findAll().subscribe(function (data) {
+            //bookes = data;
+            _this.bookes = data;
+            console.log('in component : ', data);
+        });
+        console.log(' HttpServiceComponent ngOnInit :', 'enter');
     };
     DashboardComponent.prototype.gotoDetail = function (book) {
-        var link = ['/detail', book.id];
+        var link = ['/detail', book._id];
+        console.debug("detail book id : " + book._id);
         this.router.navigate(link);
     };
     DashboardComponent = __decorate([
