@@ -21,3 +21,21 @@ cd node
 npm install
 npm start
 
+----------------------------------------------------------------------------------
+mongodb 
+创建一个数据库
+>use mydb
+检查数据库列表
+>show dbs
+删除新数据库
+>use mydb
+>db.dropDatabase()
+创建集合
+>db.books.insert([{ "name" : "think in java", "img":"java.jpg", "description" : "java is langugae." }])
+检查集合列表
+>show collections
+删除集合
+>db.bookcollection.drop()
+
+----------------------------------------------------------------------------------
+

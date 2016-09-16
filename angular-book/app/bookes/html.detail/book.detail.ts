@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+
+import { BaseController }   from '../../common/controller/app.base.controller';
 
 import { Book } from '../model/book';
 import { Bookes } from '../model/mock.bookes';
@@ -10,10 +12,11 @@ import { BookService }   from '../service/book.serevice';
   templateUrl: 'app/bookes/html.detail/book.detail.html',
   styleUrls: ['app/bookes/html.detail/book.detail.css']
 })
-export class BookDetailComponent implements OnInit {
+export class BookDetailComponent implements OnInit extends BaseController {
   book: Book;
 
   constructor(
+    private router: Router,
     private bookService: BookService,
     private route: ActivatedRoute) {
   }
@@ -28,7 +31,9 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
-  goBack(): void {
-    window.history.back();
+  goBookEdit(editbook:Book): void {
+    console.log(editbook);
+    let link = ['/book', editbook._id];
+    this.router.navigate(link);
   }
 }

@@ -1,1 +1,1 @@
-{"version":3,"file":"bookUrl.js","sourceRoot":"","sources":["bookUrl.ts"],"names":[],"mappings":";AAAA,IAAM,IAAI,GAAU,wBAAwB,CAAC;AAC7C,cAAc;AACD,eAAO,GAAU,IAAI,GAAG,UAAU,CAAC"}
+{"version":3,"file":"bookUrl.js","sourceRoot":"","sources":["bookUrl.ts"],"names":[],"mappings":";AAAA,IAAM,IAAI,GAAU,8BAA8B,CAAC;AACnD,cAAc;AACD,eAAO,GAAU,IAAI,GAAG,UAAU,CAAC;AAEnC,eAAO,GAAU,IAAI,GAAG,SAAS,CAAC"}

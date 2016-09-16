@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import * as api from '../webservice.url/bookUrl';
 import {Observable} from 'rxjs/Rx';
 
-import { Http }from '@angular/http';
+import { Http, RequestOptions, Response, Headers }from '@angular/http';
 
 @Injectable()
 export class BookService {
@@ -20,6 +20,30 @@ export class BookService {
         if (res._body) return JSON.parse(res._body);
         return res._body;
     });
+  }
+
+  addBook(data:any) {
+    let body = JSON.stringify({ data });
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+
+  // 跨域访问设定
+    let options = new RequestOptions({ headers: headers });
+    let req = this.http.post(api.addBook, body, options).toPromise();
+    let error =  req.then(this.extractData);
+    return error.catch(this.handleError);
+  }
+
+ private extractData(res: Response) {
+    let body = res.json();
+    return body.data || { };
+  }
+  private handleError (error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = (error.message) ? error.message :
+    error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.log(errMsg); // log to console instead
+    return Observable.throw(errMsg);
   }
 
   getBookes(): Promise<Book[]> {
@@ -39,4 +63,5 @@ export class BookService {
     }
     return this.data[0];
   }
+
 }

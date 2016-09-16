@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var mock_bookes_1 = require('../model/mock.bookes');
 var core_1 = require('@angular/core');
 var api = require('../webservice.url/bookUrl');
+var Rx_1 = require('rxjs/Rx');
 var http_1 = require('@angular/http');
 var BookService = (function () {
     function BookService(http) {
@@ -26,6 +27,27 @@ var BookService = (function () {
                 return JSON.parse(res._body);
             return res._body;
         });
+    };
+    BookService.prototype.addBook = function (data) {
+        var body = JSON.stringify({ data: data });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        // 跨域访问设定
+        var options = new http_1.RequestOptions({ headers: headers });
+        var req = this.http.post(api.addBook, body, options).toPromise();
+        var error = req.then(this.extractData);
+        return error.catch(this.handleError);
+    };
+    BookService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body.data || {};
+    };
+    BookService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        // We'd also dig deeper into the error to get a better message
+        var errMsg = (error.message) ? error.message :
+            error.status ? error.status + " - " + error.statusText : 'Server error';
+        console.log(errMsg); // log to console instead
+        return Rx_1.Observable.throw(errMsg);
     };
     BookService.prototype.getBookes = function () {
         return Promise.resolve(mock_bookes_1.Bookes);

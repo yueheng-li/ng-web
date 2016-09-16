@@ -26,7 +26,7 @@ var appRoutes = [
         component: little_tour_1.LittleTourComponent
     },
     {
-        path: 'book',
+        path: 'book/:id',
         component: book_form_1.BookFormComponent
     },
     {

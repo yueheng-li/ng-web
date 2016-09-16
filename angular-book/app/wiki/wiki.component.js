@@ -14,13 +14,22 @@ var wikipedia_service_1 = require('./wikipedia.service');
 var WikiComponent = (function () {
     function WikiComponent(wikipediaService) {
         this.wikipediaService = wikipediaService;
+        this.selectItem = "";
+        this.selectedItem = false;
         this.searchTermStream = new Subject_1.Subject();
     }
-    WikiComponent.prototype.search = function (term) { this.items = this.wikipediaService.search(term); };
+    WikiComponent.prototype.search = function (term) {
+        this.selectedItem = true;
+        this.items = this.wikipediaService.search(term);
+    };
+    WikiComponent.prototype.onSelect = function (item) {
+        this.selectedItem = false;
+        this.selectItem = item;
+    };
     WikiComponent = __decorate([
         core_1.Component({
             selector: 'my-wiki',
-            template: "\n    <h1>Wikipedia Demo</h1>\n    <p><i>Fetches when typing stops</i></p>\n\n    <input #term (keyup)=\"search(term.value)\"/>\n\n    <ul>\n      <li *ngFor=\"let item of items | async\">{{item}}</li>\n    </ul>\n  ",
+            template: "\n    <h1>Wikipedia Demo</h1>\n    <p><i>Fetches when typing stops</i></p>\n    \n    <input #term (keyup)=\"search(term.value)\" [value]=\"selectItem\"/>\n    <div [hidden]=\"!selectedItem\" css=\"position: absolute;\">\n    <ul class=\"heroes\" >\n      <li *ngFor=\"let item of items | async\" \n        [class.selected] = \"item === selectItem\"\n        (click)=\"onSelect(item)\">\n        <span class=\"badge\">{{item}}</span>\n      </li>\n    </ul>\n    </div>\n  ",
             providers: [wikipedia_service_1.WikipediaService]
         }), 
         __metadata('design:paramtypes', [wikipedia_service_1.WikipediaService])
