@@ -1,5 +1,4 @@
 import { Book } from '../model/book';
-import { Bookes } from '../model/mock.bookes';
 import { Injectable } from '@angular/core';
 import * as api from '../webservice.url/bookUrl';
 import {Observable} from 'rxjs/Rx';
@@ -47,7 +46,7 @@ export class BookService {
   }
 
   getBookes(): Promise<Book[]> {
-    return Promise.resolve(Bookes);
+    return Promise.resolve([]);
   }
 
   getBook(id: number): Promise<Book> {

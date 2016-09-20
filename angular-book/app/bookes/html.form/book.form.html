@@ -23,6 +23,11 @@
       </div>
 
       <div class="form-group">
+        <label for="imgPath">select image</label>
+        <input type="file" (change)="changeListener($event)">
+      </div>
+
+      <div class="form-group">
         <label for="image">Image</label>
         <select class="form-control" id="image" required
           [(ngModel)]="model.img" name="img">
@@ -30,12 +35,19 @@
         </select>
       </div>
 
+
+      
+       
+
+
       <button type="submit" class="btn btn-default" [disabled]="!bookForm.form.valid">Submit</button>
       <button type="button" class="btn btn-default" (click)="newHero()">New Hero</button>
       <button type="button" class="btn btn-default" (click)="goBack()">Back</button>
     </form>
   </div>
-  
+
+
+
   <div [hidden]="!submitted">
     <h2>You submitted the following:</h2>
     <div class="row">

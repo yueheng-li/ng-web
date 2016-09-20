@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var mock_bookes_1 = require('../model/mock.bookes');
 var core_1 = require('@angular/core');
 var api = require('../webservice.url/bookUrl');
 var Rx_1 = require('rxjs/Rx');
@@ -50,7 +49,7 @@ var BookService = (function () {
         return Rx_1.Observable.throw(errMsg);
     };
     BookService.prototype.getBookes = function () {
-        return Promise.resolve(mock_bookes_1.Bookes);
+        return Promise.resolve([]);
     };
     BookService.prototype.getBook = function (id) {
         return this.getBookes()

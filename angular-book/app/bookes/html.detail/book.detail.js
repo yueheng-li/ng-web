@@ -20,6 +20,7 @@ var book_serevice_1 = require('../service/book.serevice');
 var BookDetailComponent = (function (_super) {
     __extends(BookDetailComponent, _super);
     function BookDetailComponent(router, bookService, route) {
+        _super.call(this);
         this.router = router;
         this.bookService = bookService;
         this.route = route;

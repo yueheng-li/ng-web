@@ -4,7 +4,8 @@ export class Book {
 	public _id : number,
 	public name : string,
 	public img : string,
-	public description : string
-  ) {  }
+	public description : string,
+	public imgPath : any
+  ) { }
 
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Book } from '../bookes/model/book';
-import { Bookes } from '../bookes/model/mock.bookes';
 import { BookService }   from '../bookes/service/book.serevice';
 
 @Component({

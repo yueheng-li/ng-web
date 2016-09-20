@@ -16,14 +16,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var app_base_controller_1 = require('../../common/controller/app.base.controller');
-var book_1 = require('../model/book');
 var book_serevice_1 = require('../service/book.serevice');
+var file_upload_service_1 = require('../../common/utils/file.upload.service');
+var api = require('../webservice.url/bookUrl');
 var BookFormComponent = (function (_super) {
     __extends(BookFormComponent, _super);
-    function BookFormComponent(router, bookService, route) {
+    function BookFormComponent(router, bookService, route, uploadService) {
+        _super.call(this);
         this.router = router;
         this.bookService = bookService;
         this.route = route;
+        this.uploadService = uploadService;
         this.images = ['jpg', 'png',
             'gif', 'jpeg'];
         this.submitted = false;
@@ -31,7 +34,7 @@ var BookFormComponent = (function (_super) {
     }
     BookFormComponent.prototype.onSubmit = function () {
         this.submitted = true;
-        console.log(this.model);
+        console.log(this.model.imgPath);
         this.bookService.addBook(this.model);
     };
     Object.defineProperty(BookFormComponent.prototype, "diagnostic", {
@@ -42,7 +45,7 @@ var BookFormComponent = (function (_super) {
     });
     BookFormComponent.prototype.newHero = function () {
         var _this = this;
-        this.model = new book_1.Book();
+        this.model;
         this.active = false;
         setTimeout(function () { return _this.active = true; }, 0);
     };
@@ -53,13 +56,42 @@ var BookFormComponent = (function (_super) {
             _this.model = _this.bookService.findBookById(id);
         });
     };
+    //onChange file listener
+    BookFormComponent.prototype.changeListener = function (file) {
+        this.postFile(file.target);
+    };
+    //send post file to server 
+    BookFormComponent.prototype.postFile = function (inputValue) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            var file = inputValue.files[0];
+            formData.append("name", file.name);
+            formData.append("file", file);
+            /*let reader = new FileReader();
+            reader.readAsDataURL(file);
+            let fileData;
+            reader.onload = function(event) {
+              fileData = event.target.result;
+            }
+            if (fileData && fileData != '') {
+  
+            }*/
+            _this.model.imgPath = file;
+            _this.uploadService.upload(api.upload, file);
+        });
+    };
     BookFormComponent = __decorate([
         core_1.Component({
             selector: 'my-book-form',
             templateUrl: 'app/bookes/html.form/book.form.html',
-            styleUrls: ['app/bookes/html.form/book.form.css']
+            styleUrls: ['app/bookes/html.form/book.form.css'],
+            providers: [
+                file_upload_service_1.FileUploadService
+            ]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, book_serevice_1.BookService, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [router_1.Router, book_serevice_1.BookService, router_1.ActivatedRoute, file_upload_service_1.FileUploadService])
     ], BookFormComponent);
     return BookFormComponent;
 }(app_base_controller_1.BaseController));
